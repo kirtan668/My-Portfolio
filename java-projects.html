@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Projects — Kirtan Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root{
+    --bg: #060714;
+    --panel: rgba(255,255,255,0.045);
+    --panel-solid: #0d0e1e;
+    --line: rgba(255,255,255,0.10);
+    --text: #eef0f7;
+    --muted: #8991ac;
+    --violet: #8b6cff;
+    --teal: #29e0c4;
+    --amber: #ffb454;
+    --coral: #ff6b7d;
+    --blue: #6ea8ff;
+    --maxw: 1040px;
+    --grad-1: linear-gradient(135deg, var(--violet), var(--teal));
+    --grad-2: linear-gradient(135deg, var(--amber), var(--coral));
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0; background: var(--bg); color: var(--text);
+    font-family: 'Inter', sans-serif; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden;
+  }
+  ::selection{ background: var(--violet); color: #fff; }
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+  .display{ font-family: 'Space Grotesk', sans-serif; }
+
+  /* ---------- Animated background ---------- */
+  .bg-fx{ position: fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .orb{ position:absolute; border-radius:50%; filter: blur(90px); opacity:.55; will-change: transform; }
+  .orb-1{ width:520px; height:520px; background: var(--violet); top:-160px; left:-120px; animation: float1 22s ease-in-out infinite; }
+  .orb-2{ width:460px; height:460px; background: var(--teal); bottom:-140px; right:-100px; animation: float2 26s ease-in-out infinite; }
+  .orb-3{ width:360px; height:360px; background: var(--coral); top:38%; right:8%; animation: float3 20s ease-in-out infinite; opacity:.35; }
+  @keyframes float1{ 0%,100%{ transform: translate(0,0); } 50%{ transform: translate(60px,80px); } }
+  @keyframes float2{ 0%,100%{ transform: translate(0,0); } 50%{ transform: translate(-70px,-50px); } }
+  @keyframes float3{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(-40px,40px) scale(1.15); } }
+  .bg-grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .noise{ position:absolute; inset:0; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  main, .tabbar, footer{ position: relative; z-index: 1; }
+
+  /* ---------- Floating pill nav ---------- */
+  .tabbar{
+    position: sticky; top: 18px; z-index: 20; max-width: fit-content; margin: 18px auto 0;
+    display:flex; align-items:center; gap:2px;
+    background: rgba(13,14,30,0.65); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px; box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  }
+  .tabbar .brand{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:14px;
+    padding: 9px 14px 9px 16px; background: var(--grad-1); -webkit-background-clip:text; background-clip:text; color:transparent; text-decoration:none;
+  }
+  .tabbar a.navlink{
+    font-family:'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted); text-decoration:none;
+    padding: 9px 15px; border-radius: 999px; white-space: nowrap; transition: color .15s ease, background .2s ease;
+  }
+  .tabbar a.navlink:hover{ color: var(--text); background: rgba(255,255,255,0.06); }
+  .tabbar a.navlink.active{ color: #060714; background: var(--grad-1); font-weight:600; }
+  .tabbar a:focus-visible{ outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  main{ max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  section{ padding: 90px 0; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; color: var(--teal); font-size: 13px; margin: 0 0 16px;
+    display:inline-flex; align-items:center; gap:10px;
+    background: rgba(41,224,196,0.08); border:1px solid rgba(41,224,196,0.25); padding: 6px 14px; border-radius: 999px;
+  }
+  .eyebrow::before{ content:''; width:6px; height:6px; border-radius:50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); }
+
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; margin:0; }
+
+  .glass{
+    background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+    backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); position: relative;
+  }
+  .glow-border{ position:relative; }
+  .glow-border::before{
+    content:''; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background: var(--grad-1);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity .3s ease; pointer-events:none;
+  }
+  .glow-border:hover::before{ opacity: .7; }
+
+  .chip{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; padding: 8px 14px; border-radius: 999px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--text);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .chip .dot{ width:6px; height:6px; border-radius:50%; }
+
+  .btn{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size: 14px;
+    padding: 12px 22px; border-radius: 12px; text-decoration:none; border: 1px solid var(--line);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+  }
+  .btn:focus-visible{ outline: 2px solid var(--teal); outline-offset:2px; }
+  .btn-primary{ background: var(--grad-1); color:#060714; border-color: transparent; box-shadow: 0 8px 24px rgba(139,108,255,.35); }
+  .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px rgba(139,108,255,.5); }
+  .btn-ghost{ color: var(--text); background: rgba(255,255,255,0.04); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); transform: translateY(-3px); }
+
+  .section-lead{ color: var(--muted); max-width:66ch; margin-top:10px; font-size:15px; }
+
+  /* ---------- Page hero ---------- */
+  .page-hero{ padding: 60px 0 30px; text-align:center; }
+  .page-hero h1{ font-size: clamp(32px, 5vw, 52px); font-weight:700; letter-spacing:-0.02em; }
+  .page-hero .grad{ background: var(--grad-1); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-hero p{ color: var(--muted); max-width: 62ch; margin: 18px auto 0; font-size: 16px; }
+  .quicklinks{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top: 30px; }
+  .quicklinks a{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--muted); text-decoration:none;
+    padding:8px 16px; border:1px solid var(--line); border-radius:999px; background: rgba(255,255,255,0.03);
+    transition: all .2s ease;
+  }
+  .quicklinks a:hover{ color: var(--teal); border-color: var(--teal); }
+
+  /* ---------- Project detail block ---------- */
+  .java-project{ padding: 70px 0; border-top: 1px solid var(--line); scroll-margin-top: 100px; }
+  .jp-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
+  .jp-kicker{ font-size: 11.5px; color: var(--muted); letter-spacing:.04em; text-transform:uppercase; }
+  .jp-title{ font-size: clamp(24px, 3.4vw, 34px); font-weight:700; margin-top:8px; }
+  .jp-desc{ margin-top: 18px; font-size: 15px; color: var(--muted); max-width: 72ch; }
+  .jp-actions{ display:flex; gap:12px; flex-wrap:wrap; flex:none; }
+
+  .jp-features{ margin-top: 28px; display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px; padding:0; list-style:none; }
+  @media (max-width: 700px){ .jp-features{ grid-template-columns: 1fr; } }
+  .jp-features li{ display:flex; gap:10px; align-items:flex-start; font-size: 14px; color: var(--text); }
+  .jp-features li svg{ flex:none; margin-top:2px; color: var(--teal); }
+
+  .jp-tags{ display:flex; gap:10px; margin-top: 26px; flex-wrap:wrap; }
+
+  .jp-code{ margin-top: 32px; overflow:hidden; }
+  .jp-code-head{ display:flex; justify-content:space-between; align-items:center; padding: 16px 20px; border-bottom:1px solid var(--line); }
+  .jp-code-head h3{ font-size: 14px; font-weight:600; color: var(--text); font-family:'JetBrains Mono',monospace; }
+  .jp-code-head .file-note{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--muted); }
+  .copy-btn{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);
+    background: rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:8px;
+    padding: 6px 11px; cursor:pointer; transition: all .15s ease;
+  }
+  .copy-btn:hover{ color: var(--teal); border-color: var(--teal); }
+  pre{ margin:0; max-height: 480px; padding: 20px; overflow:auto; font-size: 12.5px; background: rgba(0,0,0,0.25) !important; }
+  pre code.hljs{ background: transparent !important; padding:0 !important; }
+
+  footer{
+    max-width: var(--maxw); margin: 0 auto; padding: 40px 24px 70px;
+    font-family:'JetBrains Mono',monospace; font-size: 12.5px; color: var(--muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap: 10px; border-top: 1px solid var(--line);
+  }
+  footer .prompt::before{ content:'© '; color: var(--teal); }
+  .blink{ display:inline-block; width:8px; height:14px; background: var(--amber); margin-left:4px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .reveal{ opacity:0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.show{ opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+<div class="bg-fx" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="bg-grid"></div>
+  <div class="noise"></div>
+</div>
+
+<nav class="tabbar" aria-label="Section navigation">
+  <a class="brand" href="index.html">kirtan.dev</a>
+  <a href="index.html#work" class="navlink">Portfolio</a>
+  <a href="#libratrack" class="navlink active">LibraTrack</a>
+  <a href="#mediqueue" class="navlink">MediQueue</a>
+  <a href="#stockledger" class="navlink">StockLedger</a>
+</nav>
+
+<main>
+
+  <section class="page-hero reveal show">
+    <span class="eyebrow mono">java projects</span>
+    <h1 class="display">Three <span class="grad">Java applications</span>, built end to end</h1>
+    <p>Each one below was designed, coded, and tested solo — covering OOP design, JDBC-backed persistence, and file I/O. Every project has its GitHub repo and a runnable .java file you can download directly.</p>
+    <div class="quicklinks">
+      <a href="#libratrack">LibraTrack — Library System</a>
+      <a href="#mediqueue">MediQueue — Hospital Scheduling</a>
+      <a href="#stockledger">StockLedger — Inventory &amp; Billing</a>
+    </div>
+  </section>
+
+  <!-- ===================== LibraTrack ===================== -->
+  <section class="java-project reveal show" id="libratrack">
+    <div class="jp-head">
+      <div>
+        <div class="jp-kicker mono">java application · solo project</div>
+        <h2 class="jp-title">LibraTrack — Library Management System</h2>
+      </div>
+      <div class="jp-actions">
+        <a class="btn btn-primary" href="https://github.com/kirtan-patel/libratrack" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a>
+        <a class="btn btn-ghost" href="LibraTrack.java" download>Download .java ↓</a>
+      </div>
+    </div>
+    <p class="jp-desc">A library system with separate admin and student logins. Admins manage the book catalog and track copies in stock; students can search, request, and return books. Issue dates, due dates, and per-day fines are calculated automatically. The full version persists everything to MySQL through JDBC and uses a Swing interface — the downloadable file below is a self-contained console demo of the same core logic.</p>
+
+    <ul class="jp-features">
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Book catalog with per-title copy tracking</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Issue / return workflow with due dates</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Automatic per-day fine calculation</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Admin vs. student account separation</li>
+    </ul>
+
+    <div class="jp-tags">
+      <span class="chip"><span class="dot" style="background:var(--teal)"></span>OOP Design</span>
+      <span class="chip"><span class="dot" style="background:var(--violet)"></span>JDBC · MySQL</span>
+      <span class="chip"><span class="dot" style="background:var(--amber)"></span>Swing GUI</span>
+      <span class="chip"><span class="dot" style="background:var(--coral)"></span>java.time</span>
+    </div>
+
+    <div class="jp-code glass">
+      <div class="jp-code-head">
+        <h3>LibraTrack.java</h3>
+        <span class="file-note">console demo · runnable</span>
+        <button class="copy-btn" data-copy-target="code-libratrack">copy</button>
+      </div>
+      <pre><code id="code-libratrack" class="language-java">import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+
+public class LibraTrack {
+
+    static final int LOAN_DAYS = 14;
+    static final double FINE_PER_DAY = 5.0;
+
+    static class Book {
+        String isbn, title, author;
+        int totalCopies, availableCopies;
+
+        Book(String isbn, String title, String author, int copies) {
+            this.isbn = isbn;
+            this.title = title;
+            this.author = author;
+            this.totalCopies = copies;
+            this.availableCopies = copies;
+        }
+    }
+
+    static class Loan {
+        String isbn, memberId;
+        LocalDate issueDate, dueDate;
+        boolean returned = false;
+
+        Loan(String isbn, String memberId) {
+            this.isbn = isbn;
+            this.memberId = memberId;
+            this.issueDate = LocalDate.now();
+            this.dueDate = issueDate.plusDays(LOAN_DAYS);
+        }
+    }
+
+    static void returnBook(Member m, String isbn, Map&lt;String, Book&gt; catalog) {
+        for (Loan l : m.loans) {
+            if (l.isbn.equals(isbn) && !l.returned) {
+                l.returned = true;
+                catalog.get(isbn).availableCopies++;
+                long lateDays = Math.max(0, ChronoUnit.DAYS.between(l.dueDate, LocalDate.now()));
+                double fine = lateDays * FINE_PER_DAY;
+                System.out.println(fine > 0 ? "Fine due: Rs " + fine : "No fine — on time.");
+                return;
+            }
+        }
+    }
+
+    // Full menu-driven main(), seed data, issue/return/view-fines
+    // handlers are in the downloadable file above.
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MediQueue ===================== -->
+  <section class="java-project reveal show" id="mediqueue">
+    <div class="jp-head">
+      <div>
+        <div class="jp-kicker mono">java application · solo project</div>
+        <h2 class="jp-title">MediQueue — Hospital Appointment System</h2>
+      </div>
+      <div class="jp-actions">
+        <a class="btn btn-primary" href="https://github.com/kirtan-patel/mediqueue" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a>
+        <a class="btn btn-ghost" href="MediQueue.java" download>Download .java ↓</a>
+      </div>
+    </div>
+    <p class="jp-desc">An appointment and scheduling system for a small clinic. Patients book slots against doctor availability, doctors can pull their own day's queue, and admins manage schedules and records. Role-based access keeps each user type limited to their own view, with all data backed by a relational schema in the full JDBC/MySQL build — the downloadable file is a console demo of the booking logic.</p>
+
+    <ul class="jp-features">
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Per-doctor open-slot scheduling</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Patient booking against real-time availability</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Doctor-facing daily queue view</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Role-based access for admin / doctor / patient</li>
+    </ul>
+
+    <div class="jp-tags">
+      <span class="chip"><span class="dot" style="background:var(--coral)"></span>Role-Based Access</span>
+      <span class="chip"><span class="dot" style="background:var(--blue)"></span>JDBC · MySQL</span>
+      <span class="chip"><span class="dot" style="background:var(--violet)"></span>Scheduling Logic</span>
+      <span class="chip"><span class="dot" style="background:var(--teal)"></span>Streams API</span>
+    </div>
+
+    <div class="jp-code glass">
+      <div class="jp-code-head">
+        <h3>MediQueue.java</h3>
+        <span class="file-note">console demo · runnable</span>
+        <button class="copy-btn" data-copy-target="code-mediqueue">copy</button>
+      </div>
+      <pre><code id="code-mediqueue" class="language-java">public class MediQueue {
+
+    static class Doctor {
+        String id, name, specialization;
+        List&lt;String&gt; slots = new ArrayList&lt;&gt;();
+    }
+
+    static class Appointment {
+        Patient patient;
+        Doctor doctor;
+        String slot;
+    }
+
+    static void bookAppointment(Patient p, Doctor d, String slot,
+                                 List&lt;Appointment&gt; appointments) {
+        if (!d.slots.remove(slot)) {
+            System.out.println("That slot isn't available.");
+            return;
+        }
+        appointments.add(new Appointment(p, d, slot));
+        System.out.println("Booked: " + slot + " with Dr. " + d.name);
+    }
+
+    static void viewDoctorQueue(Doctor d, List&lt;Appointment&gt; appointments) {
+        appointments.stream()
+            .filter(a -&gt; a.doctor.id.equals(d.id))
+            .sorted(Comparator.comparing(a -&gt; a.slot))
+            .forEach(a -&gt; System.out.println(a.slot + " — " + a.patient.name));
+    }
+
+    // Full menu-driven main(), seed data, and input handling
+    // are in the downloadable file above.
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== StockLedger ===================== -->
+  <section class="java-project reveal show" id="stockledger">
+    <div class="jp-head">
+      <div>
+        <div class="jp-kicker mono">java application · solo project</div>
+        <h2 class="jp-title">StockLedger — Inventory &amp; Billing System</h2>
+      </div>
+      <div class="jp-actions">
+        <a class="btn btn-primary" href="https://github.com/kirtan-patel/stockledger" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a>
+        <a class="btn btn-ghost" href="StockLedger.java" download>Download .java ↓</a>
+      </div>
+    </div>
+    <p class="jp-desc">A console-based inventory and billing tool for a small shop. It tracks stock levels with low-stock alerts, builds itemized invoices at the point of sale, and appends a daily sales report to disk. Built purely with core Java collections and file I/O — no external database — so it stays lightweight and runs anywhere with just a JDK.</p>
+
+    <ul class="jp-features">
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Live stock tracking with reorder-level alerts</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Multi-item invoice generation at time of sale</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Daily sales report appended to a text file</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>No external dependencies — pure core Java</li>
+    </ul>
+
+    <div class="jp-tags">
+      <span class="chip"><span class="dot" style="background:var(--teal)"></span>Collections Framework</span>
+      <span class="chip"><span class="dot" style="background:var(--amber)"></span>File I/O</span>
+      <span class="chip"><span class="dot" style="background:var(--coral)"></span>Billing &amp; Reports</span>
+    </div>
+
+    <div class="jp-code glass">
+      <div class="jp-code-head">
+        <h3>StockLedger.java</h3>
+        <span class="file-note">console demo · runnable</span>
+        <button class="copy-btn" data-copy-target="code-stockledger">copy</button>
+      </div>
+      <pre><code id="code-stockledger" class="language-java">public class StockLedger {
+
+    static class Product {
+        String sku, name;
+        double price;
+        int quantity, reorderLevel;
+    }
+
+    static void appendDailyReport(int invoiceId, List&lt;String&gt; lines, double total) {
+        try (FileWriter fw = new FileWriter("sales_report.txt", true)) {
+            fw.write("Invoice #" + invoiceId + " — " + LocalDate.now() + "\n");
+            for (String line : lines) fw.write("  " + line + "\n");
+            fw.write(String.format("  TOTAL: Rs %.2f%n%n", total));
+        } catch (IOException e) {
+            System.out.println("Could not write report: " + e.getMessage());
+        }
+    }
+
+    // Full menu-driven main(), sellItems(), restock(), and seed
+    // data are in the downloadable file above.
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="prompt">2026 Kirtan Patel — all code and content on this page is my own<span class="blink"></span></span>
+  <span>built with HTML · CSS · JS</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+
+  const links = document.querySelectorAll('.navlink');
+  const sections = [...links].slice(1).map(l => document.querySelector(l.getAttribute('href')));
+  function onScroll(){
+    let idx = 0;
+    const y = window.scrollY + 140;
+    sections.forEach((s,i) => { if(s && s.offsetTop <= y) idx = i; });
+    links.forEach(l => l.classList.remove('active'));
+    links[idx].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = document.getElementById(btn.dataset.copyTarget).innerText;
+      try{
+        await navigator.clipboard.writeText(code);
+        const old = btn.textContent;
+        btn.textContent = 'copied!';
+        setTimeout(() => btn.textContent = old, 1400);
+      }catch(e){}
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
