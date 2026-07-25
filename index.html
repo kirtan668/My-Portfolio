@@ -224,6 +224,23 @@
   .project-tags{ display:flex; gap:10px; margin-top: 20px; flex-wrap:wrap; }
   .project-team{ margin-top: 20px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
 
+  /* ---------- Java projects subsection ---------- */
+  .java-subhead{ margin-top: 64px; padding-top: 6px; border-top: 1px solid var(--line); }
+  .java-subtitle{ font-size: clamp(20px, 2.6vw, 26px); font-weight:700; margin-top: 14px; }
+  .java-grid{ margin-top: 30px; display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 980px){ .java-grid{ grid-template-columns: 1fr; } }
+  .java-card{ margin-top: 0; padding: 26px; display:flex; flex-direction:column; }
+  .java-card .project-top{ flex-direction:column; align-items:flex-start; gap:12px; }
+  .java-card .project-title{ font-size: 18px; }
+  .java-card .project-desc{ font-size: 13.5px; margin-top: 12px; }
+  .java-card .project-tags{ margin-top: auto; padding-top: 20px; }
+  .java-card-link{
+    display:inline-flex; align-items:center; gap:6px; margin-top: 18px;
+    font-size: 12px; color: var(--teal); text-decoration:none; width: fit-content;
+    padding-top: 14px; border-top: 1px solid var(--line); transition: gap .2s ease;
+  }
+  .java-card-link:hover{ gap:9px; }
+
   /* ---------- Proof / code ---------- */
   .proj-tabs{ display:flex; gap: 10px; margin-top: 34px; flex-wrap: wrap; }
   .proj-tab{
@@ -428,7 +445,7 @@
   <section id="work">
     <span class="eyebrow mono">work</span>
     <h2 class="section-head" style="font-size:clamp(26px,3.4vw,36px);">Things I've helped build</h2>
-    <p class="section-lead">A team project I contributed to — built and shipped with a small group, not solo work.</p>
+    <p class="section-lead">A team project I contributed to, plus a few larger Java applications I designed and built solo.</p>
 
     <div class="project-card glass glow-border reveal">
       <div class="project-top">
@@ -445,6 +462,67 @@
         <span class="chip"><span class="dot" style="background:var(--amber)"></span>Cloud Computing</span>
       </div>
       <div class="project-team mono">Team: Yug Patel · Krishna Parmar · Het Patel · Kirtan Patel</div>
+    </div>
+
+    <div class="java-subhead reveal">
+      <span class="eyebrow mono" style="color:var(--amber);background:rgba(255,180,84,0.08);border-color:rgba(255,180,84,0.25);">java projects · solo</span>
+      <h3 class="java-subtitle display">Larger Java applications, built end to end</h3>
+      <p class="section-lead" style="margin-top:8px;">Three bigger Java builds — each one designed, coded, and tested on my own, covering OOP design, JDBC persistence, and file-based data handling. <a href="java-projects.html" style="color:var(--teal);">See full write-ups, GitHub repos &amp; downloadable code →</a></p>
+    </div>
+
+    <div class="java-grid">
+
+      <div class="project-card java-card glass glow-border reveal">
+        <div class="project-top">
+          <div>
+            <div class="project-kicker mono">java application · solo project</div>
+            <h3 class="project-title">LibraTrack — Library Management System</h3>
+          </div>
+          <span class="chip"><span class="dot" style="background:var(--amber)"></span>Java · Swing · JDBC</span>
+        </div>
+        <p class="project-desc">A desktop library system with separate admin and student logins. Admins manage the book catalog and track copies; students can search, request, and return books. Issue dates, due dates, and per-day fines are calculated automatically and persisted to a MySQL database through JDBC.</p>
+        <div class="project-tags">
+          <span class="chip"><span class="dot" style="background:var(--teal)"></span>OOP Design</span>
+          <span class="chip"><span class="dot" style="background:var(--violet)"></span>JDBC · MySQL</span>
+          <span class="chip"><span class="dot" style="background:var(--amber)"></span>Swing GUI</span>
+        </div>
+        <a class="java-card-link mono" href="java-projects.html#libratrack">View project + code ↗</a>
+      </div>
+
+      <div class="project-card java-card glass glow-border reveal">
+        <div class="project-top">
+          <div>
+            <div class="project-kicker mono">java application · solo project</div>
+            <h3 class="project-title">MediQueue — Hospital Appointment System</h3>
+          </div>
+          <span class="chip"><span class="dot" style="background:var(--coral)"></span>Java · JDBC · MySQL</span>
+        </div>
+        <p class="project-desc">An appointment and patient-records system for a small clinic. Patients book slots against doctor availability, doctors view their daily queue, and admins manage schedules and records. Role-based access keeps each user type limited to their own view, with all data backed by a relational schema.</p>
+        <div class="project-tags">
+          <span class="chip"><span class="dot" style="background:var(--coral)"></span>Role-Based Access</span>
+          <span class="chip"><span class="dot" style="background:var(--blue)"></span>JDBC · MySQL</span>
+          <span class="chip"><span class="dot" style="background:var(--violet)"></span>Scheduling Logic</span>
+        </div>
+        <a class="java-card-link mono" href="java-projects.html#mediqueue">View project + code ↗</a>
+      </div>
+
+      <div class="project-card java-card glass glow-border reveal">
+        <div class="project-top">
+          <div>
+            <div class="project-kicker mono">java application · solo project</div>
+            <h3 class="project-title">StockLedger — Inventory &amp; Billing System</h3>
+          </div>
+          <span class="chip"><span class="dot" style="background:var(--teal)"></span>Java · Collections · File I/O</span>
+        </div>
+        <p class="project-desc">A console-based inventory and billing tool for a small shop. Tracks stock levels with low-stock alerts, generates itemized invoices on sale, and writes daily sales reports to disk. Built purely with core Java collections and file I/O — no external database — to keep it lightweight and portable.</p>
+        <div class="project-tags">
+          <span class="chip"><span class="dot" style="background:var(--teal)"></span>Collections Framework</span>
+          <span class="chip"><span class="dot" style="background:var(--amber)"></span>File I/O</span>
+          <span class="chip"><span class="dot" style="background:var(--coral)"></span>Billing &amp; Reports</span>
+        </div>
+        <a class="java-card-link mono" href="java-projects.html#stockledger">View project + code ↗</a>
+      </div>
+
     </div>
   </section>
 
@@ -583,11 +661,11 @@ ORDER BY avg_marks DESC;</code></pre>
       <div class="orb-mini" aria-hidden="true"></div>
       <p class="section-lead" style="margin-top:0;">Have an opportunity, project, or just want to say hi? Reach out below.</p>
       <div class="contact-grid">
-        <a class="contact-item" href="mailto:Kirtan.builds@gmail.com">
+        <a class="contact-item" href="mailto:Kirtan1234@gmail.com">
           <span class="contact-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </span>
-          <span><div class="lbl mono">EMAIL</div><div class="val">Kirtan.builds@gmail.com</div></span>
+          <span><div class="lbl mono">EMAIL</div><div class="val">Kirtan1234@gmail.com</div></span>
         </a>
         <a class="contact-item" href="tel:+911234567890">
           <span class="contact-icon" aria-hidden="true">
