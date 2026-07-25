@@ -215,6 +215,15 @@
   .ring-wrap .pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:12px; }
   .skill-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:20px; }
 
+  /* ---------- Work / project card ---------- */
+  .project-card{ margin-top: 36px; padding: 32px; }
+  .project-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:18px; flex-wrap:wrap; }
+  .project-kicker{ font-size: 11.5px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .project-title{ font-size: clamp(19px, 2.4vw, 24px); font-weight:700; margin-top:6px; }
+  .project-desc{ margin-top: 16px; font-size: 14.5px; color: var(--muted); max-width: 68ch; }
+  .project-tags{ display:flex; gap:10px; margin-top: 20px; flex-wrap:wrap; }
+  .project-team{ margin-top: 20px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
   /* ---------- Proof / code ---------- */
   .proj-tabs{ display:flex; gap: 10px; margin-top: 34px; flex-wrap: wrap; }
   .proj-tab{
@@ -292,6 +301,7 @@
   <span class="brand">kirtan.dev</span>
   <a href="#about" class="navlink active">About</a>
   <a href="#skills" class="navlink">Skills</a>
+  <a href="#work" class="navlink">Work</a>
   <a href="#proof" class="navlink">Proof</a>
   <a href="#contact" class="navlink">Contact</a>
 </nav>
@@ -316,7 +326,7 @@
       <div class="photo-stage reveal show">
         <div class="photo-ring" aria-hidden="true"></div>
         <div class="photo-wrap">
-          <img src="profile.JPG" alt="Photograph of Kirtan Patel" width="900" height="1200" loading="eager">
+          <img src="profile.jpg" alt="Photograph of Kirtan Patel" width="900" height="1200" loading="eager">
           <div class="photo-badge"><span class="pulse"></span>currently building &amp; learning</div>
         </div>
       </div>
@@ -412,6 +422,29 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section id="work">
+    <span class="eyebrow mono">work</span>
+    <h2 class="section-head" style="font-size:clamp(26px,3.4vw,36px);">Things I've helped build</h2>
+    <p class="section-lead">A team project I contributed to — built and shipped with a small group, not solo work.</p>
+
+    <div class="project-card glass glow-border reveal">
+      <div class="project-top">
+        <div>
+          <div class="project-kicker mono">web app · team project</div>
+          <h3 class="project-title">ReVolt — Second-Hand EV Marketplace</h3>
+        </div>
+        <a class="btn btn-ghost" href="https://yugp7052-create.github.io/first-time-live/" target="_blank" rel="noopener noreferrer">Live site ↗</a>
+      </div>
+      <p class="project-desc">A concept marketplace for buying and selling used electric vehicles — listings with verified battery health scores, side-by-side comparisons, and seller trust ratings. Built collaboratively with my teammates, covering the web app, database, and cloud pieces.</p>
+      <div class="project-tags">
+        <span class="chip"><span class="dot" style="background:var(--teal)"></span>Web Application</span>
+        <span class="chip"><span class="dot" style="background:var(--violet)"></span>Database Management</span>
+        <span class="chip"><span class="dot" style="background:var(--amber)"></span>Cloud Computing</span>
+      </div>
+      <div class="project-team mono">Team: Yug Patel · Krishna Parmar · Het Patel · Kirtan Patel</div>
     </div>
   </section>
 
@@ -550,17 +583,17 @@ ORDER BY avg_marks DESC;</code></pre>
       <div class="orb-mini" aria-hidden="true"></div>
       <p class="section-lead" style="margin-top:0;">Have an opportunity, project, or just want to say hi? Reach out below.</p>
       <div class="contact-grid">
-        <a class="contact-item" href="mailto:Kirtan.builds@gmail.com">
+        <a class="contact-item" href="mailto:Kirtan1234@gmail.com">
           <span class="contact-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </span>
-          <span><div class="lbl mono">EMAIL</div><div class="val">Kirtan.builds@gmail.com</div></span>
+          <span><div class="lbl mono">EMAIL</div><div class="val">Kirtan1234@gmail.com</div></span>
         </a>
-        <a class="contact-item" href="tel:+91 6353981944">
+        <a class="contact-item" href="tel:+911234567890">
           <span class="contact-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </span>
-          <span><div class="lbl mono">PHONE</div><div class="val">+91 6353981944</div></span>
+          <span><div class="lbl mono">PHONE</div><div class="val">+91 12345 67890</div></span>
         </a>
       </div>
     </div>
